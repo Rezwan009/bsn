@@ -1,6 +1,7 @@
 package com.devrezo.book.book;
 
 
+import com.devrezo.book.file.FileUtils;
 import com.devrezo.book.history.BookTransactionHistory;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class BookMapper {
                 .rate(book.getRate())
                 .archived(book.isArchived())
                 .shareable(book.isShareable())
-                //.cover
+                .cover(FileUtils.readFileFromLocation(book.getBookCover()))
                 .build();
     }
 
