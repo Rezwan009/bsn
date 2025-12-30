@@ -218,9 +218,10 @@ public class BookService {
         }
 
 
-        BookTransactionHistory bookTransactionHistory = bookTransactionHistoryRepository.
-                findByBookIdAndOwnerId(bookId,user.getId()).orElseThrow(()->
-                        new OperationNotPermittedException("The book is not returned yet.You can not approve its return"));
+        BookTransactionHistory bookTransactionHistory = bookTransactionHistoryRepository.findByBookIdAndOwnerId(
+                bookId,user.getId()).orElseThrow(()->
+                        new OperationNotPermittedException("The book is not returned yet.You can not approve its return")
+        );
         bookTransactionHistory.setReturnApproved(true);
         return bookTransactionHistoryRepository.save(bookTransactionHistory).getId();
     }
@@ -232,7 +233,7 @@ public class BookService {
         User user = ((User) connectedUser.getPrincipal());
 
         var bookCover = fileStorageService.saveFile(file,user.getId());
-        book.setBookCover(bookCover);
+        book.setBookCover(bookCover.toString());
         bookRepository.save(book);
     }
 }
