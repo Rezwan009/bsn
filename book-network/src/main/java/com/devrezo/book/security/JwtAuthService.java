@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtAuthService {
@@ -40,8 +41,8 @@ public class JwtAuthService {
 
     private Claims extractAllClaims(String token) {
         return Jwts
-                .parser()
-                .setSigningKey(getSignInKey()) // SecretKey type expected
+                .parserBuilder()
+                .setSigningKey(getSignInKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -56,7 +57,7 @@ public class JwtAuthService {
         var authorities = userDetails.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
-                .toList();
+                .collect(Collectors.toList());
 
         return Jwts
                 .builder()

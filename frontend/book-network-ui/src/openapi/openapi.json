@@ -1,5 +1,5 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.0.1",
   "info": {
     "title": "OpenApi specification - devrezo",
     "description": "OpenApi documentation for Spring Security",
@@ -33,9 +33,7 @@
   "paths": {
     "/feedbacks": {
       "post": {
-        "tags": [
-          "Feedback"
-        ],
+        "tags": ["Feedback"],
         "operationId": "saveFeedback",
         "requestBody": {
           "content": {
@@ -64,9 +62,7 @@
     },
     "/books": {
       "get": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "operationId": "findAllBooks",
         "parameters": [
           {
@@ -104,9 +100,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "operationId": "save",
         "requestBody": {
           "content": {
@@ -133,15 +127,13 @@
         }
       }
     },
-    "/books/cover/{book-id}": {
+    "/books/cover/{bookId}": {
       "post": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "operationId": "uploadBookCoverPicture",
         "parameters": [
           {
-            "name": "book-id",
+            "name": "bookId",
             "in": "path",
             "required": true,
             "schema": {
@@ -154,16 +146,14 @@
           "content": {
             "multipart/form-data": {
               "schema": {
+                "required": ["file"],
                 "type": "object",
                 "properties": {
                   "file": {
                     "type": "string",
                     "format": "binary"
                   }
-                },
-                "required": [
-                  "file"
-                ]
+                }
               }
             }
           }
@@ -182,15 +172,13 @@
         }
       }
     },
-    "/books/borrow/{book-id}": {
+    "/books/borrow/{bookId}": {
       "post": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "operationId": "borrowBook",
         "parameters": [
           {
-            "name": "book-id",
+            "name": "bookId",
             "in": "path",
             "required": true,
             "schema": {
@@ -216,9 +204,7 @@
     },
     "/auth/register": {
       "post": {
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "operationId": "register",
         "requestBody": {
           "content": {
@@ -246,9 +232,7 @@
     },
     "/auth/authenticate": {
       "post": {
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "operationId": "authenticate",
         "requestBody": {
           "content": {
@@ -274,15 +258,13 @@
         }
       }
     },
-    "/books/shareable/{book-id}": {
+    "/books/shareable/{bookId}": {
       "patch": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "operationId": "updateShareableStatus",
         "parameters": [
           {
-            "name": "book-id",
+            "name": "bookId",
             "in": "path",
             "required": true,
             "schema": {
@@ -306,15 +288,13 @@
         }
       }
     },
-    "/books/borrow/return/{book-id}": {
+    "/books/borrow/return/{bookId}": {
       "patch": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "operationId": "returnedBorrowedBook",
         "parameters": [
           {
-            "name": "book-id",
+            "name": "bookId",
             "in": "path",
             "required": true,
             "schema": {
@@ -338,15 +318,13 @@
         }
       }
     },
-    "/books/borrow/return/approve/{book-id}": {
+    "/books/borrow/return/approve/{bookId}": {
       "patch": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "operationId": "approvedReturnedBorrowedBook",
         "parameters": [
           {
-            "name": "book-id",
+            "name": "bookId",
             "in": "path",
             "required": true,
             "schema": {
@@ -370,15 +348,13 @@
         }
       }
     },
-    "/books/archived/{book-id}": {
+    "/books/archived/{bookId}": {
       "patch": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "operationId": "updateArchivedStatus",
         "parameters": [
           {
-            "name": "book-id",
+            "name": "bookId",
             "in": "path",
             "required": true,
             "schema": {
@@ -402,15 +378,13 @@
         }
       }
     },
-    "/feedbacks/feedback/{book-id}": {
+    "/feedbacks/feedback/{bookId}": {
       "get": {
-        "tags": [
-          "Feedback"
-        ],
+        "tags": ["Feedback"],
         "operationId": "findAllFeedbackByBook",
         "parameters": [
           {
-            "name": "book-id",
+            "name": "bookId",
             "in": "path",
             "required": true,
             "schema": {
@@ -453,13 +427,21 @@
         }
       }
     },
-    "/books/{book-id}": {
+    "/books/{bookId}": {
       "get": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "operationId": "findById",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -476,9 +458,7 @@
     },
     "/books/returned": {
       "get": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "operationId": "findAllReturnedBooks",
         "parameters": [
           {
@@ -518,9 +498,7 @@
     },
     "/books/owner": {
       "get": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "operationId": "findAllBooksByOwner",
         "parameters": [
           {
@@ -560,9 +538,7 @@
     },
     "/books/borrowed": {
       "get": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "operationId": "findAllBorrowedBooks",
         "parameters": [
           {
@@ -602,10 +578,8 @@
     },
     "/auth/activate-account": {
       "get": {
-        "tags": [
-          "Authentication"
-        ],
-        "operationId": "activateAccount",
+        "tags": ["Authentication"],
+        "operationId": "confirm",
         "parameters": [
           {
             "name": "token",
@@ -627,28 +601,26 @@
   "components": {
     "schemas": {
       "FeedbackRequest": {
+        "required": ["comment"],
         "type": "object",
         "properties": {
           "note": {
-            "type": "number",
-            "format": "double",
             "maximum": 5,
-            "minimum": 0
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
           },
           "comment": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
           },
           "bookId": {
             "type": "integer",
             "format": "int32"
           }
-        },
-        "required": [
-          "comment"
-        ]
+        }
       },
       "BookRequest": {
+        "required": ["authorName", "isbn", "synopsis", "title"],
         "type": "object",
         "properties": {
           "id": {
@@ -656,79 +628,55 @@
             "format": "int32"
           },
           "title": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
           },
           "authorName": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
           },
           "isbn": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
           },
           "synopsis": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
           },
           "shareable": {
             "type": "boolean"
           }
-        },
-        "required": [
-          "authorName",
-          "isbn",
-          "synopsis",
-          "title"
-        ]
+        }
       },
       "RegistrationRequest": {
+        "required": ["email", "firstName", "lastName", "password"],
         "type": "object",
         "properties": {
           "firstName": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
           },
           "lastName": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
           },
           "email": {
-            "type": "string",
-            "format": "email",
-            "minLength": 1
+            "type": "string"
           },
           "password": {
-            "type": "string",
             "maxLength": 2147483647,
-            "minLength": 8
+            "minLength": 8,
+            "type": "string"
           }
-        },
-        "required": [
-          "email",
-          "firstName",
-          "lastName",
-          "password"
-        ]
+        }
       },
       "AuthenticationRequest": {
+        "required": ["email", "password"],
         "type": "object",
         "properties": {
           "email": {
-            "type": "string",
-            "format": "email",
-            "minLength": 1
+            "type": "string"
           },
           "password": {
-            "type": "string",
             "maxLength": 2147483647,
-            "minLength": 8
+            "minLength": 8,
+            "type": "string"
           }
-        },
-        "required": [
-          "email",
-          "password"
-        ]
+        }
       },
       "AuthenticationResponse": {
         "type": "object",
@@ -809,8 +757,11 @@
             "type": "string"
           },
           "cover": {
-            "type": "string",
-            "format": "byte"
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
+            }
           },
           "rate": {
             "type": "number",

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Feedback")
 public class FeedbackController {
 
-    public final FeedbackService feedbackService;
+    private final FeedbackService feedbackService;
 
     @PostMapping
     public ResponseEntity<Integer> saveFeedback(
@@ -25,9 +25,9 @@ public class FeedbackController {
         return ResponseEntity.ok(feedbackService.save(request,connectedUser));
     }
 
-    @GetMapping("/feedback/{book-id}")
+    @GetMapping("/feedback/{bookId}")
     public ResponseEntity<PageResponse<FeedbackResponse>> findAllFeedbackByBook(
-            @PathVariable("book-id") Integer bookId,
+            @PathVariable("bookId") Integer bookId,
             @RequestParam(name = "page", defaultValue = "0", required = false) int page,
             @RequestParam(name = "size", defaultValue = "0", required = false) int size,
             Authentication connectedUser

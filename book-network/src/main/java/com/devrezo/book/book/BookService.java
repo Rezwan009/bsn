@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.devrezo.book.book.BookSpecification.withOwnerId;
 
@@ -52,7 +53,7 @@ public class BookService {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
         Page<Book> books = bookRepository.findAllDisplayableBooks(pageable, user.getId());
 
-        List<BookResponse> bookResponseList = books.stream().map(bookMapper::toBookResponse).toList();
+        List<BookResponse> bookResponseList = books.stream().map(bookMapper::toBookResponse).collect(Collectors.toList());
         return new PageResponse<>(
                 bookResponseList,
                 books.getNumber(),
@@ -68,7 +69,7 @@ public class BookService {
         User user = ((User) connectedUser.getPrincipal());
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
         Page<Book> books = bookRepository.findAll(withOwnerId(user.getId()),pageable);
-        List<BookResponse> bookResponseList = books.stream().map(bookMapper::toBookResponse).toList();
+        List<BookResponse> bookResponseList = books.stream().map(bookMapper::toBookResponse).collect(Collectors.toList());
         return new PageResponse<>(
                 bookResponseList,
                 books.getNumber(),
@@ -89,7 +90,7 @@ public class BookService {
 
         List<BorrowedBookResponse> borrowedBookResponses = bookTransactionHistories.stream()
                 .map(bookMapper::toBorrowedBookResponse)
-                .toList();
+                .collect(Collectors.toList());
 
         return new PageResponse<>(
                 borrowedBookResponses,
@@ -110,7 +111,7 @@ public class BookService {
 
         List<BorrowedBookResponse> borrowedBookResponses = bookTransactionHistories.stream()
                 .map(bookMapper::toBorrowedBookResponse)
-                .toList();
+                .collect(Collectors.toList());
 
         return new PageResponse<>(
                 borrowedBookResponses,
