@@ -1,19 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BookResponse, PageResponseBookResponse } from 'src/app/services/models';
+import {
+  BookResponse,
+  PageResponseBookResponse,
+} from 'src/app/services/models';
 import { BookService } from 'src/app/services/services';
 
 @Component({
-  selector: 'app-book-list',
-  templateUrl: './book-list.component.html',
-  styleUrls: ['./book-list.component.scss'],
+  selector: 'app-my-books',
+  templateUrl: './my-books.component.html',
+  styleUrls: ['./my-books.component.scss'],
 })
-export class BookListComponent implements OnInit {
+export class MyBooksComponent implements OnInit {
   page = 0;
   size = 5;
   pages: any = [];
-  message = '';
-  level: 'success' | 'error' = 'success';
+
   bookResponse: PageResponseBookResponse = {};
   constructor(private bookService: BookService, private router: Router) {}
   ngOnInit(): void {
@@ -21,7 +23,7 @@ export class BookListComponent implements OnInit {
   }
   findAllBooks() {
     this.bookService
-      .findAllBooks({
+      .findAllBooksByOwner({
         page: this.page,
         size: this.size,
       })
@@ -67,21 +69,35 @@ export class BookListComponent implements OnInit {
     return this.page === (this.bookResponse.totalPages as number) - 1;
   }
 
-  borrowBook(book: BookResponse) {
+  archiveBook(book: BookResponse) {
+   this.bookService
+     .updateArchivedStatus({
+       bookId: book.id as number,
+     })
+     .subscribe({
+       next: () => {
+         book.archived = !book.archived;
+       },
+       error: (err) => {
+         console.log(err.error);
+       },
+     });
+  }
+  shareBook(book: BookResponse) {
     this.bookService
-      .borrowBook({
+      .updateShareableStatus({
         bookId: book.id as number,
       })
       .subscribe({
         next: () => {
-          this.level = 'success';
-          this.message = 'Book successfully added to your list';
+          book.shareable = !book.shareable;
         },
         error: (err) => {
-          console.log(err);
-          this.level = 'error';
-          this.message = err.error.error;
-        },
+          console.log(err.error)
+        }
       });
+  }
+  editBook(book: BookResponse) {
+    this.router.navigate(['books', 'manage', book.id]);
   }
 }

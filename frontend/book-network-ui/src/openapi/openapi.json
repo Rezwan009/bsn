@@ -430,7 +430,7 @@
     "/books/{bookId}": {
       "get": {
         "tags": ["Book"],
-        "operationId": "findById",
+        "operationId": "findBookById",
         "parameters": [
           {
             "name": "bookId",

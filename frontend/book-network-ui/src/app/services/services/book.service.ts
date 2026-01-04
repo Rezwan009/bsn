@@ -22,8 +22,8 @@ import { findAllBorrowedBooks } from '../fn/book/find-all-borrowed-books';
 import { FindAllBorrowedBooks$Params } from '../fn/book/find-all-borrowed-books';
 import { findAllReturnedBooks } from '../fn/book/find-all-returned-books';
 import { FindAllReturnedBooks$Params } from '../fn/book/find-all-returned-books';
-import { findById } from '../fn/book/find-by-id';
-import { FindById$Params } from '../fn/book/find-by-id';
+import { findBookById } from '../fn/book/find-book-by-id';
+import { FindBookById$Params } from '../fn/book/find-book-by-id';
 import { PageResponseBookResponse } from '../models/page-response-book-response';
 import { PageResponseBorrowedBookResponse } from '../models/page-response-borrowed-book-response';
 import { returnedBorrowedBook } from '../fn/book/returned-borrowed-book';
@@ -247,27 +247,27 @@ export class BookService extends BaseService {
     );
   }
 
-  /** Path part for operation `findById()` */
-  static readonly FindByIdPath = '/books/{bookId}';
+  /** Path part for operation `findBookById()` */
+  static readonly FindBookByIdPath = '/books/{bookId}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `findById()` instead.
+   * To access only the response body, use `findBookById()` instead.
    *
    * This method doesn't expect any request body.
    */
-  findById$Response(params: FindById$Params, context?: HttpContext): Observable<StrictHttpResponse<BookResponse>> {
-    return findById(this.http, this.rootUrl, params, context);
+  findBookById$Response(params: FindBookById$Params, context?: HttpContext): Observable<StrictHttpResponse<BookResponse>> {
+    return findBookById(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `findById$Response()` instead.
+   * To access the full response (for headers, for example), `findBookById$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  findById(params: FindById$Params, context?: HttpContext): Observable<BookResponse> {
-    return this.findById$Response(params, context).pipe(
+  findBookById(params: FindBookById$Params, context?: HttpContext): Observable<BookResponse> {
+    return this.findBookById$Response(params, context).pipe(
       map((r: StrictHttpResponse<BookResponse>): BookResponse => r.body)
     );
   }

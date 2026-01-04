@@ -5,7 +5,6 @@ import com.devrezo.book.common.PageResponse;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -28,9 +27,9 @@ public class BookController {
     }
 
     @GetMapping("/{bookId}")
-    public ResponseEntity<BookResponse> findById(@PathVariable Integer bookId) {
+    public ResponseEntity<BookResponse> findBookById(@PathVariable Integer bookId) {
 
-        return ResponseEntity.ok(bookService.findById(bookId));
+        return ResponseEntity.ok(bookService.findBookById(bookId));
     }
 
     @GetMapping
@@ -116,12 +115,9 @@ public class BookController {
             @Parameter()
             @RequestPart("file") MultipartFile file,
             Authentication connectedUser
-
-
             ){
 
-        bookService.uploadBookCover(file,connectedUser,bookId);
-
+        bookService.uploadBookCoverPicture(file,connectedUser,bookId);
         return ResponseEntity.accepted().build();
     }
 }
