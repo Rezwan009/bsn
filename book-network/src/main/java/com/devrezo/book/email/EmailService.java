@@ -56,5 +56,6 @@ public class EmailService {
         String template = springTemplateEngine.process(templateName, context);
         mimeMessageHelper.setText(template,true);
         javaMailSender.send(mimeMessage);
+        System.out.println("Mail send successfully");
     }
 }

@@ -14,12 +14,51 @@ services:
     networks:
       - spring-demo
     restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      retries: 5
   mail-dev:
     container_name: mail-dev-bsn
     image: maildev/maildev
     ports:
       - 1080:1080
       - 1025:1025
+  keycloak:
+    container_name: keycloak-bsn
+    image: quay.io/keycloak/keycloak:26.5
+    ports:
+      - 9090:8080
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    networks:
+      - spring-demo
+    command:
+      - "start-dev"
+  bsn-api:
+    container_name: bsn-api
+    image: bsn/bsn:1.0.5
+    environment:
+      DB_URL: jdbc:postgresql://postgres-sql-bsn:5432/book_social_network
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 8088
+    ports:
+      - 8088:8088
+    networks:
+      - spring-demo
+    depends_on:
+      postgres:
+        condition: service_healthy
+  bsn-ui:
+    container_name: bsn-ui
+    image: bsn/bsn-ui:1.0.0
+    ports:
+      - 8080:80
+    networks:
+      - spring-demo
+    depends_on:
+      - bsn-api
 networks:
   spring-demo:
     driver: bridge
