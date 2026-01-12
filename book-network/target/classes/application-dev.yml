@@ -17,29 +17,36 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   mail:
-    host: smtp.gmail.com
+    host: ${EMAIL_HOST_NAME:smtp.gmail.com}
     port: 587
-    username: devrezo9@gmail.com
-    password: pzujvdpdnntgtqvu
+    username: ${EMAIL_USER_NAME:devrezo9@gmail.com}
+    password: ${EMAIL_PASSWORD:pzujvdpdnntgtqvu}
     protocol: smtp
     properties:
       mail:
         smtp:
+          ssl:
+            enabled: true
           auth: true
           starttls:
             enable: true
             required: true
-#        connectiontimeout: 5000
-#        tiemout: 3000
-#        writetimeout: 5000
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "http://localhost:9090/realms/book-social/network"
+
 app:
   security:
-    jwt:
-      secret-key: c7600eff02d03318c617824e1dbdbf10e33d04e7033d46fee856645ebdd4aac1
-      expiration: 86400000
-    mailing:
-      frontend:
-        activation-url: http://localhost:4200/activate-account
+#    jwt:
+#      secret-key: c7600eff02d03318c617824e1dbdbf10e33d04e7033d46fee856645ebdd4aac1
+#      expiration: 86400000
+#    mailing:
+#      frontend:
+#        activation-url: http://localhost:4200/activate-account
+    cors:
+      origins: http://localhost:4200,http://localhost:8080,http://192.168.0.227:8088,http://192.168.0.227:8080
   file:
     uploads:
       photos-output-path: ./uploads

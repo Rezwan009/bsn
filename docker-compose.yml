@@ -36,29 +36,29 @@ services:
       - 9090:8080
     networks:
       - spring-demo
-  bsn-api:
-    container_name: bsn-api
-    image: bsn/bsn:1.0.5
-    environment:
-      DB_URL: jdbc:postgresql://postgres-sql-bsn:5432/book_social_network
-      SPRING_PROFILES_ACTIVE: dev
-      SERVER_PORT: 8088
-    ports:
-      - 8088:8088
-    networks:
-      - spring-demo
-    depends_on:
-      postgres:
-        condition: service_healthy
-  bsn-ui:
-    container_name: bsn-ui
-    image: bsn/bsn-ui:1.0.0
-    ports:
-      - 8080:80
-    networks:
-      - spring-demo
-    depends_on:
-      - bsn-api
+#  bsn-api:
+#    container_name: bsn-api
+#    image: bsn/bsn:1.0.5
+#    environment:
+#      DB_URL: jdbc:postgresql://postgres-sql-bsn:5432/book_social_network
+#      SPRING_PROFILES_ACTIVE: dev
+#      SERVER_PORT: 8088
+#    ports:
+#      - 8088:8088
+#    networks:
+#      - spring-demo
+#    depends_on:
+#      postgres:
+#        condition: service_healthy
+#  bsn-ui:
+#    container_name: bsn-ui
+#    image: bsn/bsn-ui:1.0.0
+#    ports:
+#      - 8080:80
+#    networks:
+#      - spring-demo
+#    depends_on:
+#      - bsn-api
 networks:
   spring-demo:
     driver: bridge

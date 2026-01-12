@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.PublicKey;
 
-@RestController
-@RequestMapping("auth")
+//@RestController
+//@RequestMapping("auth")
 @RequiredArgsConstructor
 @Tag(name = "Authentication")
 public class AuthenticationController {

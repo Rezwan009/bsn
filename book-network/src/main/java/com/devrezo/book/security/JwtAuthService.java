@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Service
+//@Service
 public class JwtAuthService {
 
     @Value("${app.security.jwt.expiration}")
